@@ -1,0 +1,16 @@
+{
+  "name": "plantly",
+  "version": "1.0.0",
+  "description": "Plantly is your easygoing guide to keeping houseplants happy and thriving — no green thumb needed",
+  "private": "true",
+  "scripts": {
+    "client": "npm start --prefix client",
+    "server": "npm run dev --prefix server",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "Nikita Budiakov",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
