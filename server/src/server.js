@@ -6,6 +6,7 @@ import rateLimiter from 'express-rate-limit';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import AuthRouter from './routes/auth.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 const app = express();
@@ -14,6 +15,7 @@ const app = express();
 // const authenticateUser = require('./middleware/authentication');
 
 app.use(express.json());
+app.use(cookieParser())
 app.use(helmet());
 app.use(cors());
 // app.use(xss());
