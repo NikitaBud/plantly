@@ -1,12 +1,16 @@
 import { useState } from 'react';
-import { Box, Button, Grid, TextField, Typography } from '@mui/material';
+import { Box, Button, Grid, Link, TextField, Typography } from '@mui/material';
+import axios from '../services/axios';
+import { useNavigate } from 'react-router-dom';
 
-const RegisterForm = () => {
+const LoginForm = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    password: '',
-    email: '',
-  })
+    email: "",
+    password: "",
+  });
+
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -17,43 +21,34 @@ const RegisterForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
 
     try {
-      const res = await fetch('/api/v1/auth/register', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(formData),
+      const res = await axios.post('/auth/login', formData, {
+        withCredentials: true
       })
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.msg || 'Something went wrong');
-      }
-
-      alert(`User registered successfully. Welcome, ${data.user.name}!`);
-    } catch (e) {
-      console.log(e)
+      console.log(res);
+      navigate('/dashboard');
+    } catch (err) {
+      console.error(err);
+      setError(err.response?.data?.msg || 'Something went wrong');
     }
   }
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', maxWidth: 400, mx: 'auto', mt: 5 }}>
       <Typography variant="h5" align="center" gutterBottom>
-        Registration
+        Sign in
       </Typography>
+
+      {error && (
+        <Typography color="error" align="center" sx={{ mb: 2 }}>
+          {error}
+        </Typography>
+      )}
+
       <form onSubmit={handleSubmit}>
         <Grid container direction="column" spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              label="Name"
-              name="name"
-              fullWidth
-              required
-              value={formData.name}
-              onChange={handleChange}
-            />
-          </Grid>
           <Grid item xs={12}>
             <TextField
               label="Email"
@@ -82,9 +77,12 @@ const RegisterForm = () => {
               variant="contained"
               color="primary"
               fullWidth
-              >
-              Register
+            >
+              Sign in
             </Button>
+            <p style={{ textAlign: 'center' }}>
+              Нет аккаунта? <Link to="/register">Зарегистрироваться</Link>
+            </p>
           </Grid>
         </Grid>
       </form>
@@ -92,4 +90,4 @@ const RegisterForm = () => {
   )
 }
 
-export default RegisterForm;
+export default LoginForm;
