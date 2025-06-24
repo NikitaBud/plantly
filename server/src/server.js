@@ -6,6 +6,9 @@ import rateLimiter from 'express-rate-limit';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import AuthRouter from './routes/auth.js';
+import authenticatedUser from './middleware/auth.js';
+import speciesRouter from './routes/species.js';
+import usersPlantsRouter from './routes/user_plants.js';
 import cookieParser from 'cookie-parser';
 
 dotenv.config();
@@ -22,6 +25,8 @@ app.use(cors());
 
 app.route('/').get((req, res) => res.send('<h1>Welcome</h1>'));
 app.use('/api/v1/auth', AuthRouter);
+app.use('/api/v1/species', authenticatedUser, speciesRouter);
+app.use('/api/v1/user-plants', authenticatedUser, usersPlantsRouter);
 
 const PORT = process.env.PORT || 8080;
 

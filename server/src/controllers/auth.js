@@ -25,11 +25,30 @@ const login = async (req, res, next) => {
 
   const isPasswordCorrect = await user.comparePassword(password);
   if (!isPasswordCorrect) {
-    throw new UnauthenticatedError('User does not exist');
+    throw new UnauthenticatedError('Invalid email or password');
   }
 
   const token = user.createJWT();
-  res.status(StatusCodes.OK).json({ user: { name: user.name }, token });
+  res
+    .cookie('token', token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: 'Lax',
+      maxAge: 30 * 60 * 60 * 1000,
+    })
+    .status(StatusCodes.OK).json({ user: { name: user.name }, token });
 }
 
-export default { register, login };
+const logout = async (req, res, next) => {
+  res
+    .cookie('token', '', {
+      httpOnly: true,
+      expires: new Date(0), // удаляет куку
+      sameSite: 'Lax',
+      secure: process.env.NODE_ENV === 'production',
+    })
+    .status(200)
+    .json({ msg: 'Logged out successfully' });
+}
+
+export default { register, login, logout };
