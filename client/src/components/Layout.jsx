@@ -5,14 +5,6 @@ import { Outlet } from 'react-router-dom';
 const Layout = () => {
   return (
     <Box display="flex" flexDirection="column" minHeight="100vh">
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" component="div">
-            Plantly 🌱
-          </Typography>
-        </Toolbar>
-      </AppBar>
-
       <Container sx={{mt: 4, mb: 2, flexGrow: 1}}>
         <Outlet />
       </Container>

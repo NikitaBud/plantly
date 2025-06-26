@@ -16,7 +16,7 @@ export const createUserPlant = async (req, res) => {
     throw new Errors.BadRequestError('Invalid species_id');
   }
 
-  const species = await Species.findOne(species_id);
+  const species = await Species.findOne({ _id: species_id });
   if (!species) {
     throw new Errors.NotFoundError('Species_id not found');
   }

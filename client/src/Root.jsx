@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button, CssBaseline, ThemeProvider } from '@mui/material';
 import { darkTheme, lightTheme } from './styles/theme';
 import App from './App';
+import { SnackbarProvider } from './context/SnackbarContext';
 
 const Root = () => {
   const [darkMode, setDarkMode] = useState(() => {
@@ -16,17 +17,12 @@ const Root = () => {
   const toggleTheme = () => setDarkMode(prev => !prev);
 
   return (
-      <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-        <CssBaseline />
-        <Button
-          variant="contained"
-          onClick={toggleTheme}
-          sx={{ position: 'fixed', top: 16, right: 16, zIndex: 1300 }}
-        >
-          {darkMode ? 'Light Mode' : 'Dark Mode'}
-        </Button>
-        <App />
-      </ThemeProvider>
+    <ThemeProvider theme={ darkMode ? darkTheme : lightTheme }>
+      <SnackbarProvider>
+        <CssBaseline/>
+        <App darkMode={darkMode} toggleTheme={toggleTheme} />
+      </SnackbarProvider>
+    </ThemeProvider>
   )
 }
 
