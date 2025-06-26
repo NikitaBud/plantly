@@ -33,7 +33,7 @@ const login = async (req, res, next) => {
     .cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'Lax',
+      sameSite: 'None',
       maxAge: 30 * 60 * 60 * 1000,
     })
     .status(StatusCodes.OK).json({ user: { name: user.name }, token });
@@ -44,7 +44,7 @@ const logout = async (req, res, next) => {
     .cookie('token', '', {
       httpOnly: true,
       expires: new Date(0), // удаляет куку
-      sameSite: 'Lax',
+      sameSite: 'None',
       secure: process.env.NODE_ENV === 'production',
     })
     .status(200)
