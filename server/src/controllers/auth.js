@@ -6,7 +6,14 @@ import UnauthenticatedError from '../errors/unauthenticated.js';
 const register = async (req, res, next) => {
   const user = await User.create({ ...req.body });
   const token = user.createJWT();
-  res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token });
+  res
+    .cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'None',
+      maxAge: 30 * 60 * 60 * 1000,
+    })
+    .status(StatusCodes.CREATED).json({ user: { name: user.name }, token });
 }
 
 const login = async (req, res, next) => {
