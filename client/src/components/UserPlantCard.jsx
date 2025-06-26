@@ -9,7 +9,6 @@ import {
   DialogContent,
   IconButton, Button,
 } from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from 'react';

@@ -27,7 +27,7 @@ export const getPlant = async (req, res) => {
 export const addPlant = async (req, res) => {
   try {
     const plant = await Species.create(req.body);
-    res.status(StatusCodes.CREATED).json({success: true, plant });
+    res.status(StatusCodes.CREATED).json({ success: true, plant });
   } catch (e) {
     throw new Errors.BadRequestError('Invalid data for plant creation');
   }
@@ -43,7 +43,7 @@ export const updatePlant = async (req, res) => {
   )
 
   if (!updatedPlant) {
-    throw new Errors.NotFoundError(`Plant with the ID ${speciesId} not found.`);
+    throw new Errors.NotFoundError(`Plant with the ID ${ speciesId } not found.`);
   }
 
   res.status(StatusCodes.OK).json({ plant: updatedPlant });

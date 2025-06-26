@@ -1,8 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import xss from 'xss-clean'
 import helmet from 'helmet';
-import rateLimiter from 'express-rate-limit';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import AuthRouter from './routes/auth.js';
@@ -14,9 +12,6 @@ import cookieParser from 'cookie-parser';
 dotenv.config();
 const app = express();
 
-// connect DB
-// const authenticateUser = require('./middleware/authentication');
-
 app.use(express.json());
 app.use(cookieParser())
 app.use(helmet());
@@ -24,7 +19,6 @@ app.use(cors({
   origin: process.env.CLIENT_ORIGIN,
   credentials: true,
 }));
-// app.use(xss());
 
 app.route('/').get((req, res) => res.send('<h1>Welcome</h1>'));
 app.use('/api/v1/auth', AuthRouter);

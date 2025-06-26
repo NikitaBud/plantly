@@ -9,15 +9,14 @@ import Navbar from './components/Navbar';
 const App = ({ darkMode, toggleTheme }) => {
   return (
     <BrowserRouter>
-      <Navbar darkMode={darkMode} toggleTheme={toggleTheme} />
+      <Navbar darkMode={ darkMode } toggleTheme={ toggleTheme }/>
       <Routes>
-        <Route element={<Layout />}>
-          <Route path="/register" element={<RegisterForm />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/species" element={<SpeciesCatalog />} />
-          {/* additional pages */}
-          <Route path="*" element={<RegisterForm />} />
+        <Route element={ <Layout/> }>
+          <Route path="/register" element={ <RegisterForm/> }/>
+          <Route path="/login" element={ <LoginForm/> }/>
+          <Route path="/dashboard" element={ <Dashboard/> }/>
+          <Route path="/species" element={ <SpeciesCatalog/> }/>
+          <Route path="*" element={ <RegisterForm/> }/>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -12,12 +12,12 @@ const errorHandler = (err, req, res, next) => {
   }
 
   if (err.code && err.code === 11000) {
-    customError.msg = `Duplicate field value entered for ${Object.keys(err.keyValue)} field, please chose another value.`
+    customError.msg = `Duplicate field value entered for ${ Object.keys(err.keyValue) } field, please chose another value.`
     customError.statusCode = StatusCodes.BAD_REQUEST;
   }
 
   if (err.name === 'CastError') {
-    customError.msg = `Invalid ID: ${err.value}, please provide a valid ID`;
+    customError.msg = `Invalid ID: ${ err.value }, please provide a valid ID`;
     customError.statusCode = StatusCodes.NOT_FOUND;
   }
 

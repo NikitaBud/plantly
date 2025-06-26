@@ -20,16 +20,16 @@ const SpeciesCatalog = () => {
   }, []);
 
   return (
-    <Box sx={{ p: 4 }}>
+    <Box sx={ { p: 4 } }>
       <Typography variant="h4" gutterBottom>
         Plant Catalog
       </Typography>
-      <Grid container spacing={2}>
-        {speciesList.map((item) => (
-          <Grid item xs={12} sm={6} md={4} key={item._id}>
-            <SpeciesCard species={item} />
+      <Grid container spacing={ 2 }>
+        { speciesList.map((item) => (
+          <Grid item xs={ 12 } sm={ 6 } md={ 4 } key={ item._id }>
+            <SpeciesCard species={ item }/>
           </Grid>
-        ))}
+        )) }
       </Grid>
     </Box>
   );

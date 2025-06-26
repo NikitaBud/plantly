@@ -1,7 +1,6 @@
 import {
   Table, TableBody, TableCell, TableContainer,
   TableHead, TableRow, Paper, Typography, TableSortLabel, IconButton, Tooltip,
-  Dialog, Snackbar
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -133,9 +132,9 @@ const UserPlantTable = ({ plants, onDelete, onUpdate }) => {
       </TableContainer>
 
       <EditPlantDialog
-        open={!!editingPlant}
-        plant={editingPlant}
-        onClose={(updatedPlant) => {
+        open={ !!editingPlant }
+        plant={ editingPlant }
+        onClose={ (updatedPlant) => {
           if (updatedPlant) {
             setEditingPlant(null);
             onUpdate((prev) =>
@@ -144,7 +143,7 @@ const UserPlantTable = ({ plants, onDelete, onUpdate }) => {
           } else {
             setEditingPlant(null);
           }
-        }}
+        } }
       />
     </>
   );

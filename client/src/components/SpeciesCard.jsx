@@ -1,4 +1,4 @@
-import { Alert, Box, Button, Card, CardContent, CardMedia, Snackbar, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, CardMedia, Snackbar, Typography } from '@mui/material';
 import axios from '../services/axios';
 import { useNavigate } from 'react-router-dom';
 import AddPlantModal from './AddPlantModal';
@@ -22,7 +22,7 @@ const SpeciesCard = ({ species }) => {
         { withCredentials: true }
       );
       setModalOpen(false);
-      showSnackbar(`${species.name} added successfully!`, 'success');
+      showSnackbar(`${ species.name } added successfully!`, 'success');
       navigate('/dashboard');
     } catch (err) {
       console.error('Failed to add plant', err);

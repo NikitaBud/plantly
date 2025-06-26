@@ -1,6 +1,5 @@
 import User from '../models/User.js';
 import { StatusCodes } from 'http-status-codes';
-import Errors from '../errors/index.js';
 import BadRequestError from '../errors/bad-request.js';
 import UnauthenticatedError from '../errors/unauthenticated.js';
 
@@ -43,7 +42,7 @@ const logout = async (req, res, next) => {
   res
     .cookie('token', '', {
       httpOnly: true,
-      expires: new Date(0), // удаляет куку
+      expires: new Date(0),
       sameSite: 'None',
       secure: process.env.NODE_ENV === 'production',
     })

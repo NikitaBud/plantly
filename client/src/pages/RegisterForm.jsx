@@ -32,55 +32,55 @@ const RegisterForm = () => {
   }
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', maxWidth: 400, mx: 'auto', mt: 5 }}>
+    <Box sx={ { display: 'flex', flexDirection: 'column', maxWidth: 400, mx: 'auto', mt: 5 } }>
       <Typography variant="h5" align="center" gutterBottom>
         Registration
       </Typography>
-      <form onSubmit={handleSubmit}>
-        <Grid container direction="column" spacing={2}>
-          <Grid item xs={12}>
+      <form onSubmit={ handleSubmit }>
+        <Grid container direction="column" spacing={ 2 }>
+          <Grid item xs={ 12 }>
             <TextField
               label="Name"
               name="name"
               fullWidth
               required
-              value={formData.name}
-              onChange={handleChange}
+              value={ formData.name }
+              onChange={ handleChange }
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={ 12 }>
             <TextField
               label="Email"
               name="email"
               type="email"
               fullWidth
               required
-              value={formData.email}
-              onChange={handleChange}
+              value={ formData.email }
+              onChange={ handleChange }
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={ 12 }>
             <TextField
               label="Password"
               name="password"
               type="password"
               fullWidth
               required
-              value={formData.password}
-              onChange={handleChange}
+              value={ formData.password }
+              onChange={ handleChange }
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={ 12 }>
             <Button
               type="submit"
               variant="contained"
               color="primary"
               fullWidth
-              >
+            >
               Register
             </Button>
-            <p style={{ textAlign: 'center' }}>
-              Уже есть аккаунт? <Link to="/login">Войти</Link>
+            <p style={ { textAlign: 'center' } }>
+              Already have an account? <Link to="/login">Sign in</Link>
             </p>
           </Grid>
         </Grid>
