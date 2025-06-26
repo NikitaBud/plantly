@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Box, Button, Grid, Link, TextField, Typography } from '@mui/material';
+import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import axios from '../services/axios';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -27,7 +28,7 @@ const LoginForm = () => {
       const res = await axios.post('/auth/login', formData, {
         withCredentials: true
       })
-      console.log(res);
+
       navigate('/dashboard');
     } catch (err) {
       console.error(err);

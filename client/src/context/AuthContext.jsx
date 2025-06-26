@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     axios
-      .get('/api/v1/current-user', { withCredentials: true })
+      .get('/api/v1/auth/current-user', { withCredentials: true })
       .then(res => setUser(res.data.user))
       .catch(() => setUser(null))
       .finally(() => setAuthChecked(true));

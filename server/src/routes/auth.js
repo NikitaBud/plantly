@@ -9,8 +9,6 @@ router.post('/login', Auth.login);
 router.post('/register', Auth.register);
 router.post('/logout', Auth.logout);
 
-// router.post('/logout', Auth.logout);
-
 router.get('/current-user', authMiddleware, getCurrentUser);
 
 export default router;
