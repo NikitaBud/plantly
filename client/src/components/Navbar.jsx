@@ -11,10 +11,12 @@ import { Brightness4, Brightness7, Logout } from '@mui/icons-material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import axios from '../services/axios';
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = ({ darkMode, toggleTheme }) => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   const handleLogout = async () => {
     try {
@@ -34,26 +36,30 @@ const Navbar = ({ darkMode, toggleTheme }) => {
           </Link>
         </Typography>
 
-        <Box sx={ { display: 'flex', gap: 2 } }>
-          <Button color="inherit" component={ Link } to="/dashboard">
-            Dashboard
-          </Button>
-          <Button color="inherit" component={ Link } to="/species">
-            Catalog
-          </Button>
+        { isAuthenticated && (
+          <>
+            <Box sx={ { display: 'flex', gap: 2 } }>
+              <Button color="inherit" component={ Link } to="/dashboard">
+                Dashboard
+              </Button>
+              <Button color="inherit" component={ Link } to="/species">
+                Catalog
+              </Button>
 
-          <Tooltip title="Toggle Theme">
-            <IconButton onClick={ toggleTheme } color="inherit">
-              { darkMode ? <Brightness7/> : <Brightness4/> }
-            </IconButton>
-          </Tooltip>
+              <Tooltip title="Toggle Theme">
+                <IconButton onClick={ toggleTheme } color="inherit">
+                  { darkMode ? <Brightness7/> : <Brightness4/> }
+                </IconButton>
+              </Tooltip>
 
-          <Tooltip title="Logout">
-            <IconButton onClick={ handleLogout } color="inherit">
-              <Logout/>
-            </IconButton>
-          </Tooltip>
-        </Box>
+              <Tooltip title="Logout">
+                <IconButton onClick={ handleLogout } color="inherit">
+                  <Logout/>
+                </IconButton>
+              </Tooltip>
+            </Box>
+          </>
+        ) }
       </Toolbar>
     </AppBar>
   );
