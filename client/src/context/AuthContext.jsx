@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import axios from 'axios';
+import { getCurrentUser } from '../services/authService';
 
 const AuthContext = createContext();
 
@@ -8,15 +8,14 @@ export const AuthProvider = ({ children }) => {
   const [authChecked, setAuthChecked] = useState(false);
 
   useEffect(() => {
-    axios
-      .get('/api/v1/auth/current-user', { withCredentials: true })
+      getCurrentUser()
       .then(res => setUser(res.data.user))
       .catch(() => setUser(null))
       .finally(() => setAuthChecked(true));
   }, []);
 
   const logout = async () => {
-    await axios.get('/api/v1/logout', { withCredentials: true });
+    await logout();
     setUser(null);
   }
 

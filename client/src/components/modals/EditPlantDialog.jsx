@@ -3,8 +3,8 @@ import {
   TextField, Button, Stack
 } from '@mui/material';
 import { useState, useEffect } from 'react';
-import { useSnackbar } from '../context/SnackbarContext';
-import axios from '../services/axios';
+import { useSnackbar } from '../../context/SnackbarContext';
+import { updateUserPlant } from '../../services/userPlantsService';
 
 const EditPlantDialog = ({ open, plant, onClose }) => {
   const [nickname, setNickname] = useState('');
@@ -21,11 +21,7 @@ const EditPlantDialog = ({ open, plant, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.patch(
-        `/user-plants/${ plant._id }`,
-        { nickname, location },
-        { withCredentials: true }
-      );
+      const res = await updateUserPlant(plant._id, { nickname, location });
       showSnackbar('Plant updated successfully');
       onClose(res.data.plant);
     } catch (err) {

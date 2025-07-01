@@ -9,18 +9,16 @@ import {
 } from '@mui/material';
 import { Brightness4, Brightness7, Logout } from '@mui/icons-material';
 import { Link, useNavigate } from 'react-router-dom';
-import { useTheme } from '@mui/material/styles';
-import axios from '../services/axios';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
+import { logout } from '../../services/authService';
 
 const Navbar = ({ darkMode, toggleTheme }) => {
-  const theme = useTheme();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
 
   const handleLogout = async () => {
     try {
-      await axios.post('/auth/logout', {}, { withCredentials: true });
+      await logout();
       navigate('/login');
     } catch (err) {
       console.error('Logout error', err);

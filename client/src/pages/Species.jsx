@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import axios from '../services/axios';
 import { Box, Grid, Typography } from '@mui/material';
-import SpeciesCard from '../components/SpeciesCard';
+import SpeciesCard from '../components/plants/SpeciesCard';
+import { getAllSpecies } from '../services/plantsService';
 
 const SpeciesCatalog = () => {
   const [speciesList, setSpeciesList] = useState([]);
@@ -9,7 +9,7 @@ const SpeciesCatalog = () => {
   useEffect(() => {
     const fetchSpecies = async () => {
       try {
-        const res = await axios.get('/species', { withCredentials: true });
+        const res = await getAllSpecies();
         setSpeciesList(res.data.species);
       } catch (err) {
         console.error('Error loading species', err);
