@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import axios from '../services/axios';
 import { Box, Button, Typography, Grid, IconButton, MenuItem, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import UserPlantCard from '../components/UserPlantCard';
-import UserPlantTable from '../components/UserPlantTable';
+import UserPlantCard from '../components/plants/UserPlantCard';
+import UserPlantTable from '../components/plants/UserPlantTable';
 import GridViewIcon from '@mui/icons-material/GridView';
 import TableViewIcon from '@mui/icons-material/TableView';
+import { getCurrentUser } from '../services/authService';
+import { getUserPlants } from '../services/userPlantsService';
 
 const Dashboard = () => {
   const [userPlants, setUserPlants] = useState([]);
@@ -19,9 +20,9 @@ const Dashboard = () => {
 
   const fetchData = async () => {
     try {
-      const user = await axios.get('/auth/current-user', { withCredentials: true });
+      const user = await getCurrentUser();
       setUserName(user.data.user.name);
-      const plants = await axios.get('/user-plants', { withCredentials: true });
+      const plants = await getUserPlants();
       setUserPlants(plants.data.plants);
     } catch (error) {
       console.error(error);

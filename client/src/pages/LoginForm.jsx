@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Box, Button, Grid, TextField, Typography } from '@mui/material';
-import axios from '../services/axios';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { login } from '../services/authService';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -25,9 +25,7 @@ const LoginForm = () => {
     setError('');
 
     try {
-      const res = await axios.post('/auth/login', formData, {
-        withCredentials: true
-      })
+      const res = await login(formData);
 
       navigate('/dashboard');
     } catch (err) {

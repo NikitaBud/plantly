@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Box, Button, Grid, TextField, Typography } from '@mui/material';
-import axios from '../services/axios';
 import { useNavigate, Link } from 'react-router-dom';
+import { register } from '../services/authService';
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -23,7 +23,7 @@ const RegisterForm = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post('/auth/register', formData);
+      const res = await register(formData);
 
       navigate('/dashboard');
     } catch (e) {

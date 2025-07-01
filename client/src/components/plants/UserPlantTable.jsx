@@ -4,8 +4,8 @@ import {
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditPlantDialog from './EditPlantDialog';
-import { useSnackbar } from '../context/SnackbarContext';
+import EditPlantDialog from '../modals/EditPlantDialog';
+import { useSnackbar } from '../../context/SnackbarContext';
 import { useState } from 'react';
 
 const columns = [
