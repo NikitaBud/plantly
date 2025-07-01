@@ -47,7 +47,7 @@ export const getSingleUserPlant = async (req, res) => {
     throw new Errors.BadRequestError('Invalid plant ID');
   }
 
-  const plant = await UserPlant.findOne({_id: plant_id, user_id }).populate('species_id');
+  const plant = await UserPlant.findOne({ _id: plant_id, user_id }).populate('species_id');
   if (!plant) {
     throw new Errors.NotFoundError('User plant not found.');
   }
@@ -81,7 +81,7 @@ export const deleteUserPlant = async (req, res) => {
   const { id: plantId } = req.params;
   const user_id = req.user.userId;
 
-  const plant = await UserPlant.findOneAndDelete({_id: plantId, user_id});
+  const plant = await UserPlant.findOneAndDelete({ _id: plantId, user_id });
   if (!plant) {
     throw new Errors.NotFoundError('User plant not found.');
   }

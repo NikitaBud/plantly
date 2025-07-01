@@ -9,12 +9,11 @@ import {
   DialogContent,
   IconButton, Button,
 } from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from 'react';
-import { useSnackbar } from '../context/SnackbarContext';
-import axios from '../services/axios';
+import { useSnackbar } from '../../context/SnackbarContext';
+import { deleteUserPlant } from '../../services/userPlantsService';
 
 const UserPlantCard = ({ plant, onDelete }) => {
   const [open, setOpen] = useState(false);
@@ -28,11 +27,7 @@ const UserPlantCard = ({ plant, onDelete }) => {
     if (!confirmed) return;
 
     try {
-      const res = await axios.delete(
-        `/user-plants/${ plant._id }`,
-        { withCredentials: true }
-      );
-
+      const res = await deleteUserPlant(plant._id);
       showSnackbar('Plant deleted successfully', 'success');
       handleClose();
       onDelete(plant._id);
@@ -61,13 +56,13 @@ const UserPlantCard = ({ plant, onDelete }) => {
         <CardMedia
           component="img"
           height="300"
-          image={ plant.species_id.image_url || '/images/placeholder.png' }
+          image={ plant.species_id?.image_url || '/images/placeholder.png' }
           alt={ plant.nickname }
           sx={ { objectFit: 'cover' } }
         />
         <CardContent>
           <Typography variant="h6" gutterBottom>
-            { plant.nickname || plant.species_id.name }
+            { plant.nickname || plant.species_id?.name }
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Location: { plant.location || 'N/A' }
@@ -77,7 +72,7 @@ const UserPlantCard = ({ plant, onDelete }) => {
 
       <Dialog open={ open } onClose={ handleClose } fullWidth maxWidth="sm">
         <DialogTitle>
-          { plant.nickname || plant.species_id.name }
+          { plant.nickname || plant.species_id?.name }
           <IconButton
             aria-label="close"
             onClick={ handleClose }
@@ -87,15 +82,25 @@ const UserPlantCard = ({ plant, onDelete }) => {
           </IconButton>
         </DialogTitle>
         <DialogContent dividers>
-          <Typography><strong>Latin name:</strong> { plant.species_id.latin_name }</Typography>
-          <Typography><strong>Light:</strong> { plant.species_id.light_requirements }</Typography>
-          <Typography><strong>Watering:</strong> { plant.species_id.watering_frequency }</Typography>
-          <Typography><strong>Humidity:</strong> { plant.species_id.humidity_preference }</Typography>
-          <Typography><strong>Toxicity:</strong> { plant.species_id.toxicity_info }</Typography>
+          <Typography><strong>Latin name:</strong> { plant.species_id?.latin_name }</Typography>
+          <Typography><strong>Light:</strong> { plant.species_id?.light_requirements }</Typography>
+          <Typography><strong>Watering:</strong> { plant.species_id?.watering_frequency }</Typography>
+          <Typography><strong>Humidity:</strong> { plant.species_id?.humidity_preference }</Typography>
+          <Typography><strong>Toxicity:</strong> { plant.species_id?.toxicity_info }</Typography>
           <Typography mt={ 2 }><strong>Care Instructions:</strong></Typography>
-          <Typography>{ plant.species_id.care_instructions }</Typography>
+          <Typography>{ plant.species_id?.care_instructions }</Typography>
 
           <Box mt={ 3 } textAlign="right">
+            {/* TODO implement edit functionality */}
+            {/*<Button*/}
+            {/*  sx={ { mr: 1 }}*/}
+            {/*  variant="contained"*/}
+            {/*  color="secondary"*/}
+            {/*  startIcon={ <EditIcon /> }*/}
+            {/*  onClick={ () => console.log("edit...") }*/}
+            {/*>*/}
+            {/*  Edit Plant*/}
+            {/*</Button>*/}
             <Button
               variant="contained"
               color="error"

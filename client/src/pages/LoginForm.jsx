@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Box, Button, Grid, TextField, Typography } from '@mui/material';
-import axios from '../services/axios';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { login } from '../services/authService';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
   const [error, setError] = useState('');
@@ -25,9 +25,7 @@ const LoginForm = () => {
     setError('');
 
     try {
-      const res = await axios.post('/auth/login', formData, {
-        withCredentials: true
-      })
+      const res = await login(formData);
 
       navigate('/dashboard');
     } catch (err) {
@@ -37,42 +35,42 @@ const LoginForm = () => {
   }
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', maxWidth: 400, mx: 'auto', mt: 5 }}>
+    <Box sx={ { display: 'flex', flexDirection: 'column', maxWidth: 400, mx: 'auto', mt: 5 } }>
       <Typography variant="h5" align="center" gutterBottom>
         Sign in
       </Typography>
 
-      {error && (
-        <Typography color="error" align="center" sx={{ mb: 2 }}>
-          {error}
+      { error && (
+        <Typography color="error" align="center" sx={ { mb: 2 } }>
+          { error }
         </Typography>
-      )}
+      ) }
 
-      <form onSubmit={handleSubmit}>
-        <Grid container direction="column" spacing={2}>
-          <Grid item xs={12}>
+      <form onSubmit={ handleSubmit }>
+        <Grid container direction="column" spacing={ 2 }>
+          <Grid item xs={ 12 }>
             <TextField
               label="Email"
               name="email"
               type="email"
               fullWidth
               required
-              value={formData.email}
-              onChange={handleChange}
+              value={ formData.email }
+              onChange={ handleChange }
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={ 12 }>
             <TextField
               label="Password"
               name="password"
               type="password"
               fullWidth
               required
-              value={formData.password}
-              onChange={handleChange}
+              value={ formData.password }
+              onChange={ handleChange }
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={ 12 }>
             <Button
               type="submit"
               variant="contained"
@@ -81,8 +79,8 @@ const LoginForm = () => {
             >
               Sign in
             </Button>
-            <p style={{ textAlign: 'center' }}>
-              Нет аккаунта? <Link to="/register">Зарегистрироваться</Link>
+            <p style={ { textAlign: 'center' } }>
+              Don't have an account? <Link to="/register">Sign up</Link>
             </p>
           </Grid>
         </Grid>

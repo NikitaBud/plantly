@@ -3,8 +3,8 @@ import {
   TextField, Button, Stack
 } from '@mui/material';
 import { useState, useEffect } from 'react';
-import { useSnackbar } from '../context/SnackbarContext';
-import axios from '../services/axios';
+import { useSnackbar } from '../../context/SnackbarContext';
+import { updateUserPlant } from '../../services/userPlantsService';
 
 const EditPlantDialog = ({ open, plant, onClose }) => {
   const [nickname, setNickname] = useState('');
@@ -21,11 +21,7 @@ const EditPlantDialog = ({ open, plant, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.patch(
-        `/user-plants/${plant._id}`,
-        { nickname, location },
-        { withCredentials: true }
-      );
+      const res = await updateUserPlant(plant._id, { nickname, location });
       showSnackbar('Plant updated successfully');
       onClose(res.data.plant);
     } catch (err) {
@@ -35,27 +31,27 @@ const EditPlantDialog = ({ open, plant, onClose }) => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={ open } onClose={ onClose }>
       <DialogTitle>Edit Plant</DialogTitle>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={ handleSubmit }>
         <DialogContent>
-          <Stack spacing={2} sx={{ mt: 1 }}>
+          <Stack spacing={ 2 } sx={ { mt: 1 } }>
             <TextField
               label="Nickname"
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
+              value={ nickname }
+              onChange={ (e) => setNickname(e.target.value) }
               fullWidth
             />
             <TextField
               label="Location"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
+              value={ location }
+              onChange={ (e) => setLocation(e.target.value) }
               fullWidth
             />
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose}>Cancel</Button>
+          <Button onClick={ onClose }>Cancel</Button>
           <Button type="submit" variant="contained">Save</Button>
         </DialogActions>
       </form>

@@ -1,9 +1,9 @@
-import { Alert, Box, Button, Card, CardContent, CardMedia, Snackbar, Typography } from '@mui/material';
-import axios from '../services/axios';
+import { Box, Button, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import AddPlantModal from './AddPlantModal';
+import AddPlantModal from '../modals/AddPlantModal';
 import { useState } from 'react';
-import { useSnackbar } from '../context/SnackbarContext';
+import { useSnackbar } from '../../context/SnackbarContext';
+import { addUserPlant } from '../../services/userPlantsService';
 
 const SpeciesCard = ({ species }) => {
   const navigate = useNavigate();
@@ -12,17 +12,13 @@ const SpeciesCard = ({ species }) => {
 
   const handleAdd = async ({ nickname, location }) => {
     try {
-      await axios.post(
-        '/user-plants',
-        {
-          species_id: species._id,
-          nickname: nickname || species.name,
-          location
-        },
-        { withCredentials: true }
-      );
+      await addUserPlant({
+        species_id: species._id,
+        nickname: nickname || species.name,
+        location
+      });
       setModalOpen(false);
-      showSnackbar(`${species.name} added successfully!`, 'success');
+      showSnackbar(`${ species.name } added successfully!`, 'success');
       navigate('/dashboard');
     } catch (err) {
       console.error('Failed to add plant', err);

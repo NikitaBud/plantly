@@ -19,27 +19,27 @@ const AddPlantModal = ({ open, onClose, onSubmit, species }) => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Add "{species?.name}" to My Plants</DialogTitle>
+    <Dialog open={ open } onClose={ onClose }>
+      <DialogTitle>Add "{ species?.name }" to My Plants</DialogTitle>
       <DialogContent>
         <TextField
           fullWidth
           margin="normal"
           label="Nickname"
-          value={nickname}
-          onChange={(e) => setNickname(e.target.value)}
+          value={ nickname }
+          onChange={ (e) => setNickname(e.target.value) }
         />
         <TextField
           fullWidth
           margin="normal"
           label="Location"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
+          value={ location }
+          onChange={ (e) => setLocation(e.target.value) }
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button variant="contained" onClick={handleSubmit}>
+        <Button onClick={ onClose }>Cancel</Button>
+        <Button variant="contained" onClick={ handleSubmit }>
           Add
         </Button>
       </DialogActions>

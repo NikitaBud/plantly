@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, CssBaseline, ThemeProvider } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import { darkTheme, lightTheme } from './styles/theme';
 import App from './App';
 import { SnackbarProvider } from './context/SnackbarContext';
@@ -20,7 +20,7 @@ const Root = () => {
     <ThemeProvider theme={ darkMode ? darkTheme : lightTheme }>
       <SnackbarProvider>
         <CssBaseline/>
-        <App darkMode={darkMode} toggleTheme={toggleTheme} />
+        <App darkMode={ darkMode } toggleTheme={ toggleTheme }/>
       </SnackbarProvider>
     </ThemeProvider>
   )

@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import axios from '../services/axios';
 import { Box, Button, Typography, Grid, IconButton, MenuItem, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import UserPlantCard from '../components/UserPlantCard';
-import UserPlantTable from '../components/UserPlantTable';
+import UserPlantCard from '../components/plants/UserPlantCard';
+import UserPlantTable from '../components/plants/UserPlantTable';
 import GridViewIcon from '@mui/icons-material/GridView';
 import TableViewIcon from '@mui/icons-material/TableView';
+import { getCurrentUser } from '../services/authService';
+import { getUserPlants } from '../services/userPlantsService';
 
 const Dashboard = () => {
   const [userPlants, setUserPlants] = useState([]);
@@ -19,9 +20,9 @@ const Dashboard = () => {
 
   const fetchData = async () => {
     try {
-      const user = await axios.get('/auth/current-user', { withCredentials: true });
+      const user = await getCurrentUser();
       setUserName(user.data.user.name);
-      const plants = await axios.get('/user-plants', { withCredentials: true });
+      const plants = await getUserPlants();
       setUserPlants(plants.data.plants);
     } catch (error) {
       console.error(error);
@@ -58,79 +59,79 @@ const Dashboard = () => {
   };
 
   return (
-    <Box sx={{ p: 4 }}>
-      <Box sx={{
+    <Box sx={ { p: 4 } }>
+      <Box sx={ {
         display: 'flex',
         justifyContent: 'space-between',
         mb: 4,
         alignItems: 'center',
-      }}>
-        <Typography variant="h4">Welcome, {userName}!</Typography>
-        <IconButton onClick={() => setViewMode(viewMode === 'grid' ? 'table' : 'grid')}>
-          {viewMode === 'grid' ? <TableViewIcon /> : <GridViewIcon />}
+      } }>
+        <Typography variant="h4">Welcome, { userName }!</Typography>
+        <IconButton onClick={ () => setViewMode(viewMode === 'grid' ? 'table' : 'grid') }>
+          { viewMode === 'grid' ? <TableViewIcon/> : <GridViewIcon/> }
         </IconButton>
       </Box>
 
-      <Button variant="contained" onClick={() => navigate('/species')} sx={{ mb: 3 }}>
+      <Button variant="contained" onClick={ () => navigate('/species') } sx={ { mb: 3 } }>
         Add Plant
       </Button>
 
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mb: 3 }}>
+      <Box sx={ { display: 'flex', flexWrap: 'wrap', gap: 2, mb: 3 } }>
         <TextField
           label="Search"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          value={ search }
+          onChange={ (e) => setSearch(e.target.value) }
           variant="outlined"
           size="small"
         />
         <TextField
           label="Filter by Location"
           select
-          value={locationFilter}
-          onChange={(e) => setLocationFilter(e.target.value)}
+          value={ locationFilter }
+          onChange={ (e) => setLocationFilter(e.target.value) }
           size="small"
-          sx={{ minWidth: 160 }}
+          sx={ { minWidth: 160 } }
         >
           <MenuItem value="">All</MenuItem>
-          {[...new Set(userPlants.map(p => p.location))].map(loc => (
-            <MenuItem key={loc} value={loc}>{loc}</MenuItem>
-          ))}
+          { [...new Set(userPlants.map(p => p.location))].map(loc => (
+            <MenuItem key={ loc } value={ loc }>{ loc }</MenuItem>
+          )) }
         </TextField>
         <TextField
           label="Filter by Species"
           select
-          value={speciesFilter}
-          onChange={(e) => setSpeciesFilter(e.target.value)}
+          value={ speciesFilter }
+          onChange={ (e) => setSpeciesFilter(e.target.value) }
           size="small"
-          sx={{ minWidth: 160 }}
+          sx={ { minWidth: 160 } }
         >
           <MenuItem value="">All</MenuItem>
-          {[...new Set(userPlants.map(p => p.species_id?.name))].map(spec => (
-            <MenuItem key={spec} value={spec}>{spec}</MenuItem>
-          ))}
+          { [...new Set(userPlants.map(p => p.species_id?.name))].map(spec => (
+            <MenuItem key={ spec } value={ spec }>{ spec }</MenuItem>
+          )) }
         </TextField>
       </Box>
 
 
-      {viewMode === 'grid' ? (
+      { viewMode === 'grid' ? (
         <Grid container justifyContent="center">
-          {filteredPlants.map(plant => (
-            <UserPlantCard key={plant._id} plant={plant} onDelete={handleDelete} />
-          ))}
+          { filteredPlants.map(plant => (
+            <UserPlantCard key={ plant._id } plant={ plant } onDelete={ handleDelete }/>
+          )) }
         </Grid>
       ) : (
         <UserPlantTable
-          plants={filteredPlants}
-          onDelete={handleDelete}
-          onUpdate={(updatedPlant) => {
+          plants={ filteredPlants }
+          onDelete={ handleDelete }
+          onUpdate={ (updatedPlant) => {
             setUserPlants((prev) =>
               prev.map((plant) =>
                 plant._id === updatedPlant._id ? updatedPlant : plant
               )
             );
-          }}
+          } }
         />
-      )}
+      ) }
     </Box>
   );
 };

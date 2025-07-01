@@ -1,13 +1,19 @@
 import User from '../models/User.js';
 import { StatusCodes } from 'http-status-codes';
-import Errors from '../errors/index.js';
 import BadRequestError from '../errors/bad-request.js';
 import UnauthenticatedError from '../errors/unauthenticated.js';
 
 const register = async (req, res, next) => {
   const user = await User.create({ ...req.body });
   const token = user.createJWT();
-  res.status(StatusCodes.CREATED).json({ user: { name: user.getUsername() }, token });
+  res
+    .cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'None',
+      maxAge: 30 * 60 * 60 * 1000,
+    })
+    .status(StatusCodes.CREATED).json({ user: { name: user.name }, token });
 }
 
 const login = async (req, res, next) => {
@@ -32,8 +38,8 @@ const login = async (req, res, next) => {
   res
     .cookie('token', token, {
       httpOnly: true,
-      secure: false,
-      sameSite: 'Lax',
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'None' : "Lax",
       maxAge: 30 * 60 * 60 * 1000,
     })
     .status(StatusCodes.OK).json({ user: { name: user.name }, token });
@@ -43,8 +49,8 @@ const logout = async (req, res, next) => {
   res
     .cookie('token', '', {
       httpOnly: true,
-      expires: new Date(0), // удаляет куку
-      sameSite: 'Lax',
+      expires: new Date(0),
+      sameSite: 'None',
       secure: process.env.NODE_ENV === 'production',
     })
     .status(200)

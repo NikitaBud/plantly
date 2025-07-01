@@ -13,7 +13,7 @@ const authMiddleware = (req, res, next) => {
       userId: payload.userId,
       name: payload.name
     };
-    
+
     next();
   } catch (err) {
     return res.status(401).json({ error: 'Invalid Token' });
