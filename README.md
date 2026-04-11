@@ -91,7 +91,7 @@ npm start
 ## Author
 
 **Nik Budiakov**\
-[GitHub](https://github.com/yourusername)
+[GitHub](https://github.com/NikitaBud)
 
 ---
 
